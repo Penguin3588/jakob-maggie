@@ -36,6 +36,8 @@ unique(lobster_traps$TRAPS)
 lobster_traps <- lobster_traps %>% 
   mutate(TRAPS = na_if(TRAPS, -99999))
 
+unique(lobster_traps$TRAPS)
+
 ```
 
 ## Subset using filter()
@@ -46,9 +48,10 @@ lobster_no_napl <- lobster_traps %>%
 lobster_carp_20 <- lobster_traps %>% 
   filter(SITE == "CARP" & TRAPS > 20)
 
-max_monthly <- lobster_traps %>% 
+lobster_month_max <- lobster_traps %>% 
   group_by(SITE, MONTH) %>% 
-  summarise(max = max(TRAPS, na.rm = TRUE))
-
+  summarise(max_traps = max(TRAPS, na.rm = TRUE))
+head(lobster_month_max)
 ```
 
+## 
