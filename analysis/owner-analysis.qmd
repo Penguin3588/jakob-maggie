@@ -1,5 +1,55 @@
 ---
-title: "owner-analysis"
+title: "owner"
+author: "Jakob"
 format: html
+editor: visual
 ---
+
+## Excercise
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(here)
+```
+```{r}
+lobster_abundance <-read_csv(here::here("Data/Lobster_Abundance_All_Years_20220829.csv"))
+```
+```{r}
+lobster_abundance
+```
+
+```{r}
+summarise(lobster_abundance)
+```
+```{r}
+lobster_abundance <- lobster_abundance %>% 
+  mutate(SIZE_MM = na_if(SIZE_MM,-99999)
+           )
+
+unique(lobster_abundance)
+```
+
+```{r}
+lobster_abundance_no_NAPL <- lobster_abundance %>% 
+  filter(SITE != "NAPL")
+unique(lobster_abundance_no_NAPL)
+```
+```{r}
+subset_lobster <- lobster_abundance %>% 
+  filter(SITE == "AQUE" & SIZE_MM>70)
+unique(subset_lobster)
+```
+
+```{r}
+carapace_max <- lobster_abundance %>% 
+  group_by(SITE, MONTH) %>% 
+  summarise(Max_size = max(SIZE_MM, na.rm = TRUE))
+```
+```{r}
+head(carapace_max)
+```
+
 
