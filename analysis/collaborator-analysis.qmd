@@ -54,4 +54,20 @@ lobster_month_max <- lobster_traps %>%
 head(lobster_month_max)
 ```
 
-## 
+## Exercise: Data Visualization
+```{r}
+head(lobster_traps)
+
+ggplot(lobster_traps, aes(x = TRAPS))+
+  geom_histogram() +
+  facet_wrap(~YEAR)
+
+
+```
+
+```{r}
+
+
+
+```
+
