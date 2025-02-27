@@ -7,6 +7,8 @@ author: maggie
 
 ### load packages
 ```{r}
+#| message: false
+
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -16,6 +18,40 @@ library(here)
 
 ### load data
 ```{r}
+#| message: false
 lobster_traps <- read_csv(here::here("Data/Lobster_Trap_Counts_All_Years_20210519.csv"))
 ```
 
+### explore data
+```{r}
+head(lobster_traps)
+
+```
+
+## Convert missing values using mutate() and na_if(
+```{r}
+# has -99999 for missing value
+unique(lobster_traps$TRAPS)
+
+lobster_traps <- lobster_traps %>% 
+  mutate(TRAPS = na_if(TRAPS, -99999))
+
+unique(lobster_traps$TRAPS)
+
+```
+
+## Subset using filter()
+```{r}
+lobster_no_napl <- lobster_traps %>% 
+  filter(SITE != "NAPL")
+
+lobster_carp_20 <- lobster_traps %>% 
+  filter(SITE == "CARP" & TRAPS > 20)
+
+lobster_month_max <- lobster_traps %>% 
+  group_by(SITE, MONTH) %>% 
+  summarise(max_traps = max(TRAPS, na.rm = TRUE))
+head(lobster_month_max)
+```
+
+## 
