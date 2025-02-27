@@ -5,23 +5,51 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Excercise
 
 ```{r}
-1 + 1
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(here)
 ```
-
-You can add options to executable code like this
+```{r}
+lobster_abundance <-read_csv(here::here("Data/Lobster_Abundance_All_Years_20220829.csv"))
+```
+```{r}
+lobster_abundance
+```
 
 ```{r}
-#| echo: false
-2 * 2
+summarise(lobster_abundance)
+```
+```{r}
+lobster_abundance <- lobster_abundance %>% 
+  mutate(SIZE_MM = na_if(SIZE_MM,-99999)
+           )
+
+unique(lobster_abundance)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+lobster_abundance_no_NAPL <- lobster_abundance %>% 
+  filter(SITE != "NAPL")
+unique(lobster_abundance_no_NAPL)
+```
+```{r}
+subset_lobster <- lobster_abundance %>% 
+  filter(SITE == "AQUE" & SIZE_MM>70)
+unique(subset_lobster)
+```
+
+```{r}
+carapace_max <- lobster_abundance %>% 
+  group_by(SITE, MONTH) %>% 
+  summarise(Max_size = max(SIZE_MM, na.rm = TRUE))
+```
+```{r}
+head(carapace_max)
+```
+
+
