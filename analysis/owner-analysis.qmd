@@ -52,4 +52,11 @@ carapace_max <- lobster_abundance %>%
 head(carapace_max)
 ```
 
+## Exercise: Data Visualization
+
+```{r}
+ggplot(lobster_abundance,
+       aes())
+```
+
 
